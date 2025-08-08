@@ -1,5 +1,8 @@
 package br.com.darleimota.screenmatch;
 
+import br.com.darleimota.screenmatch.model.DadosSerie;
+import br.com.darleimota.screenmatch.service.ConsumoApi;
+import br.com.darleimota.screenmatch.service.ConverterDados;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +16,13 @@ public class ScreenmatchApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("Primeiro projeto Spring sem web");
+
+		var consumoApi = new ConsumoApi();
+		var json = consumoApi.obterDados("https://www.omdbapi.com/?t=gilmore+girls&apikey=dfe2b9a3");
+		System.out.println(json);
+
+		ConverterDados conversor = new ConverterDados();
+		DadosSerie dados = conversor.obterDados(json,DadosSerie.class);
+		System.out.println(dados);
 	}
 }
